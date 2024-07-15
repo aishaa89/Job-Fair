@@ -1,0 +1,68 @@
+
+<div class="container">
+  <div class="row">
+  <div class="d-flex justify-content-around mt-4 mb-4">
+    <input class="form-control w-25" type="text" (input)="filterCustomersByName($event)"  placeholder="Filter by customer name" />
+   
+    <input class="form-control w-25" type="number"  [(ngModel)]="filterAmount" (input)="filterCustomersByamount()"  placeholder="Filter by Amount" />
+
+  </div>
+
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+   <table class="table table-bordered mt-4">
+        <thead class="thead-dark">
+          <tr class=" table-primary">
+            <th  class="text-center">Name</th>
+            <th  class="text-center">TransAction</th>
+            <th  class="text-center">select Customer</th>
+
+          </tr>
+        </thead>
+        <tbody>
+                <tr class="table-light"  *ngFor="let customer of customersWithTransactions">
+                <td class="text-center ">{{ customer.name }}</td>
+                  
+                <td >
+                    <!-- <tr  *ngFor="let transaction of customer.transactions">
+                        
+                        <td> <span class="fw-bold "> Date: </span> {{ transaction.date }}   ,    
+                         <span class="fw-bold ">  Amount: </span>   {{ transaction.amount }}
+                      </td>  
+                    </tr> -->
+                      <div class="card mt-3" *ngFor="let transaction of customer.transactions" >
+                        <div class="card-header">
+                         TransActions
+                        </div>
+                        <ul class="list-group list-group-flush">
+                          <li class="list-group-item"><span class="fw-bold "> Date: </span> {{ transaction.date }}</li>
+                          <li class="list-group-item"><span class="fw-bold ">  Amount: </span>   {{ transaction.amount }}</li>
+                        
+                        </ul>
+                      </div> 
+                      
+                    </td>
+
+                    <td class="text-center">
+                      <input class="cursor-pointer" type="radio" name="customer" (change)="onSelectCustomer(customer.id)" />
+      
+                    </td>
+               </tr> 
+        </tbody>
+      </table>
+
+
+      <div class="mt-3" *ngIf="selectedCustomer">
+        <app-line-chart [transactions]="selectedCustomer.transactions!"></app-line-chart>
+      </div>
+       <div class="mt-3" *ngIf="!selectedCustomer">
+           <h3 class="text-center text-danger">Select Customer To View Line Bar</h3>
+       </div>
+
+      </div>
+    </div>
+</div>
+
+
+  
